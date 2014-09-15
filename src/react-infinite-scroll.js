@@ -5,10 +5,17 @@ function topPosition(domElt) {
   return domElt.offsetTop + topPosition(domElt.offsetParent);
 }
 
+var DebugMixin = ['componentWillMount', 'componentDidMount', 'componentWillReceiveProps', 'shouldComponentUpdate', 'componentWillUpdate', 'componentDidUpdate', 'componentWillUnmount'].reduce(function (acc, funcName) {
+    acc[funcName] = function () {
+        console.log("DebugMixin. Component: " + this.displayName + ", method: " + funcName);
+    }
+}, {});
+
 module.exports = function (React) {
   if (React.addons && React.addons.InfiniteScroll) {
     return React.addons.InfiniteScroll;
   }
+  mixins: [DebugMixin],
   React.addons = React.addons || {};
   var InfiniteScroll = React.addons.InfiniteScroll = React.createClass({
     getDefaultProps: function () {
