@@ -16,9 +16,9 @@ module.exports = function (React) {
   if (React.addons && React.addons.InfiniteScroll) {
     return React.addons.InfiniteScroll;
   }
-  mixins: [DebugMixin],
   React.addons = React.addons || {};
   var InfiniteScroll = React.addons.InfiniteScroll = React.createClass({
+    mixins: [DebugMixin],
     getDefaultProps: function () {
       return {
         pageStart: 0,
