@@ -29,9 +29,9 @@ module.exports = function (React) {
       };
     },
     componentWillReceiveProps: function (nextProps) {
-        this.setState({
+        /*this.setState({
             pageStart: 0
-        });
+        });*/
     },
     componentDidMount: function () {
       this.pageLoaded = this.props.pageStart;
