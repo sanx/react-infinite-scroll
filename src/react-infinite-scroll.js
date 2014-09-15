@@ -22,7 +22,7 @@ module.exports = function (React) {
     },
     componentWillReceiveProps: function (nextProps) {
         this.setState({
-            pageStart: nextProps.resetPageStart ? 0 : this.state.pageStart
+            pageStart: 0
         });
     },
     componentDidMount: function () {
