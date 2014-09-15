@@ -8,6 +8,10 @@ function topPosition(domElt) {
 var DebugMixin = ['componentWillMount', 'componentDidMount', 'componentWillReceiveProps', 'shouldComponentUpdate', 'componentWillUpdate', 'componentDidUpdate', 'componentWillUnmount'].reduce(function (acc, funcName) {
     acc[funcName] = function () {
         console.log("DebugMixin. Component: " + this.displayName + ", method: " + funcName);
+        if ('shouldComponentUpdate' === funcName) {
+            console.log('returning true');
+            return true;
+        }
     };
     return acc;
 }, {});
