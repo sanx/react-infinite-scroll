@@ -5,37 +5,29 @@ function topPosition(domElt) {
   return domElt.offsetTop + topPosition(domElt.offsetParent);
 }
 
-var DebugMixin = ['componentWillMount', 'componentDidMount', 'componentWillReceiveProps', 'shouldComponentUpdate', 'componentWillUpdate', 'componentDidUpdate', 'componentWillUnmount'].reduce(function (acc, funcName) {
-    acc[funcName] = function () {
-        console.log("DebugMixin. Component: " + this.displayName + ", method: " + funcName);
-        if ('shouldComponentUpdate' === funcName) {
-            console.log('returning true');
-            return true;
-        }
-    };
-    return acc;
-}, {});
-
-module.exports = function (React) {
+module.exports = function (React, mixins) {
   if (React.addons && React.addons.InfiniteScroll) {
     return React.addons.InfiniteScroll;
   }
   React.addons = React.addons || {};
   var InfiniteScroll = React.addons.InfiniteScroll = React.createClass({
-    mixins: [DebugMixin],
+    displayName: 'InfiniteScroll',
+    mixins: mixins,
     getDefaultProps: function () {
       return {
         pageStart: 0,
         hasMore: false,
         loadMore: function () {},
         threshold: 250,
+        resetPageStart: false,
         loader: InfiniteScroll._defaultLoader
       };
     },
     componentWillReceiveProps: function (nextProps) {
         /*this.setState({
-            pageStart: 0
+            pageStart: nextProps.resetPageStart ? 0 : this.state.pageStart
         });*/
+        this.pageLoaded = nextProps.resetPageStart ? 0 : this.pageLoaded;
     },
     componentDidMount: function () {
       this.pageLoaded = this.props.pageStart;
